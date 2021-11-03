@@ -1,17 +1,16 @@
 import React from 'react';
 import Search from './components/search/Search';
 import './App.css';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-
+import ThemeProvider from '@mui/material/styles/ThemeProvider';
 
 class App extends React.Component{
     render(){
       return (
-        <MuiThemeProvider>
+        <ThemeProvider>
           <div>
             <Search />
           </div>
-        </MuiThemeProvider>
+        </ThemeProvider>
       )
     }
 }
