@@ -7,6 +7,12 @@ import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 
 class ImageResults extends React.Component{
+    
+    state={
+        open: false,
+        currentImg: ''
+    }
+
     render()
     {
         let imageList;
@@ -27,7 +33,7 @@ class ImageResults extends React.Component{
                             </IconButton>
                         }
                         >
-                        <img src="{img.largeImageUrl} alt" />
+                        <img src={img.largeImageUrl} alt=" " />
                         </ImageListItem>
                     ))
                 }
@@ -40,9 +46,22 @@ class ImageResults extends React.Component{
             imageList = null;
         }
 
+        const action=[
+            <Button label="Close" primary={true} onClick={this.handleClose} />
+        ]
+
         return(
             <div>
-                <ImageList />
+                {imageList}
+            <Dialog
+                actions={actions}
+                modal={false}
+                open={this.state.open}
+                onRequestClose={this.handleClose}
+            >
+
+            <img src={this.state.currentImg} alt="" style={{width:'100%'}} />
+            </Dialog>
             </div>
         )
     }
