@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+import ImageResults from "../imageResults/imageResults";
 
 class Search extends React.Component{
 
@@ -10,11 +12,21 @@ class Search extends React.Component{
     }
 
     onTextChange = (e) => {
-        this.setState({[e.target.name]: e.target.value})
+        this.setState({[e.target.name]: e.target.value}, () => {
+            axios
+            .get(
+                `${this.state.apiUrl}/?key=${this.state.apiKey}&q=${
+                    this.state.searchText
+                }&image_type=photo&safesearch=true`
+            )
+            .then(res=>this.setState({images: res.data.hits}))
+            .catch(err => console.log(err));
+        });
     }
 
     render()
     {
+        console.log(this.state.images);
         return(
             <div>
             
@@ -35,10 +47,12 @@ class Search extends React.Component{
                  borderBottomStyle: "groove"
                 }}
                 placeholder="Search for images"
-                name="search"
-                value={this.state.searchText}>
+                name="searchText"
+                value={this.state.searchText}
                 onChange={this.onTextChange}
-                </input>
+                />
+            
+            {this.state.images.length>0 ? (<ImageResults images={this.state.images} /> ) : null }
             </div>
         )
     }
