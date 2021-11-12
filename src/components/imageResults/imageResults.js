@@ -13,6 +13,14 @@ class ImageResults extends React.Component{
         currentImg: ''
     }
 
+    handleOpen=img=>{
+        this.setState({open: true, currentImg: img})
+    }
+
+    handleClose=()=>{
+        this.setState({open:false});
+    }
+
     render()
     {
         let imageList;
@@ -28,12 +36,12 @@ class ImageResults extends React.Component{
                         title={img.tags}
                         key={img.id}
                         actionIcon={
-                            <IconButton>
+                            <IconButton onClick={() => this.handleOpen(img.largeImageURL)}>
                                 <Zoom color="white" />
                             </IconButton>
                         }
                         >
-                        <img src={img.largeImageUrl} alt=" " />
+                        <img src={img.largeImageURL} alt=" " />
                         </ImageListItem>
                     ))
                 }
@@ -46,12 +54,12 @@ class ImageResults extends React.Component{
             imageList = null;
         }
 
-        const action=[
+        const actions=[
             <Button label="Close" primary={true} onClick={this.handleClose} />
         ]
 
         return(
-            <div>
+            <div style={{marginLeft: 50, marginRight:50, marginTop:20}}>
                 {imageList}
             <Dialog
                 actions={actions}
